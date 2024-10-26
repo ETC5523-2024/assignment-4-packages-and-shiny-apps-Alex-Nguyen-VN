@@ -9,6 +9,12 @@ Depends:
     R (>= 2.10)
 Imports: 
     shiny,
+    shinydashboard,
+    bslib,
+    dplyr,
+    ggplot2,
+    DT,
+    lubridate
 Suggests: 
     knitr,
     rmarkdown,
