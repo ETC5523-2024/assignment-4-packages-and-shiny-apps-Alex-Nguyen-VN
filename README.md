@@ -1,22 +1,24 @@
-# Assignment 4: R Packages and Shiny Apps
 
-**Assignment 4** for ETC5523 focuses on the development of an R package and a Shiny application. This repository contains the source code, documentation, and examples for both.
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 
-## Project Overview
+# ausrooftop
 
-This repository contains two key components:
+<!-- badges: start -->
+<!-- badges: end -->
 
-1. **R Package**: A custom R package designed for the assigment 4 of the unit 5523 - Communication with Data. 
-This package helps the public have a closer look to the Australia Electricity Market by providing matching between
-the total operational demand of the network with the expected generation output of the solar rooftop generator. 
-
-2. **Shiny App**: An interactive Shiny app built to analyze the dataset. This app allows users to do something funny. I haven't though about it yet. Hope nobody find this commit.
+This R package, `actual_RV_gen_explorer`, is designed to help users
+explore renewable generation data across various regions in Australia.
+The package includes a Shiny application to visualize and analyse the
+data interactively. This package was developed as part of an assignment
+to demonstrate R package creation, data visualization, and user
+interactivity.
 
 ## Installation
 
-To install the custom R package directly from GitHub, use:
+You can install the development version of ausrooftop from
+[GitHub](https://github.com/) with:
 
-```r
-# install.packages("devtools")
-devtools::install_github("Alex-Nguyen-VN/assignment-4-packages-and-shiny-apps-Alex-Nguyen-VN")
+``` r
+# install.packages("pak")
+pak::pak("ETC5523-2024/assignment-4-packages-and-shiny-apps-Alex-Nguyen-VN")
 ```
