@@ -5,13 +5,12 @@ library(bslib)
 library(dplyr)
 library(ggplot2)
 library(DT)
-library(ausrooftop)
 library(lubridate)
 
 # Define a custom theme
 my_theme <- bs_theme(
   version = 4,
-  bootswatch = "darkly",
+  bootswatch = "flatly",
   primary = "#3498db",
   secondary = "#2ecc71"
 )
@@ -41,7 +40,7 @@ ui <- dashboardPage(
                 # Filter options and plot
                 box(
                   title = "Filters", width = 4, solidHeader = TRUE, status = "primary",
-                  selectInput("region", "Select Region:", choices = unique(actual_demand_june$REGIONID), selected = "NSW1"),
+                  selectInput("region", "Select Region:", choices = unique(actual_demand_june$REGIONID)),
                   actionButton("lucky_button", "I'm Feeling Lucky")
                 ),
                 box(
@@ -67,28 +66,28 @@ server <- function(input, output, session) {
   # Summary metrics
   output$total_demand <- renderValueBox({
     # Filter data based on selected region
-    regional_demand <- actual_demand_june %>% filter(REGIONID == input$region)
+    regional_demand <- actual_demand_june |> filter(REGIONID == input$region)
     total_demand <- sum(regional_demand$OPERATIONAL_DEMAND, na.rm = TRUE)
     valueBox(total_demand, "Total Demand (MW)", icon = icon("bolt"), color = "blue")
   })
 
   output$average_demand <- renderValueBox({
     # Filter data based on selected region
-    regional_demand <- actual_demand_june %>% filter(REGIONID == input$region)
+    regional_demand <- actual_demand_june |> filter(REGIONID == input$region)
     avg_demand <- mean(regional_demand$OPERATIONAL_DEMAND, na.rm = TRUE)
     valueBox(round(avg_demand, 2), "Average Demand (MW)", icon = icon("tachometer-alt"), color = "green")
   })
 
   output$total_gen <- renderValueBox({
     # Filter data based on selected region
-    regional_gen <- actual_RV_gen %>% filter(REGIONID == input$region)
+    regional_gen <- actual_RV_gen |> filter(REGIONID == input$region)
     total_gen <- sum(regional_gen$POWER, na.rm = TRUE)
     valueBox(total_gen, "Total Generation (MW)", icon = icon("sun"), color = "yellow")
   })
 
   output$average_gen <- renderValueBox({
     # Filter data based on selected region
-    regional_gen <- actual_RV_gen %>% filter(REGIONID == input$region)
+    regional_gen <- actual_RV_gen |> filter(REGIONID == input$region)
     avg_gen <- mean(regional_gen$POWER, na.rm = TRUE)
     valueBox(round(avg_gen, 2), "Average Generation (MW)", icon = icon("chart-line"), color = "purple")
   })

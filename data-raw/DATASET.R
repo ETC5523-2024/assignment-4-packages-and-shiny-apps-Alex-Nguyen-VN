@@ -28,7 +28,7 @@ actual_demand_june <- actual_demand_june |>
   )
 
 actual_demand_june <- actual_demand_june |>
-  dplyr::mutate(TIME = hms(TIME))
+  dplyr::mutate(TIME = lubridate::hms(TIME))
 
 # Step 2: List all the CSV files in the folder
 folder_path_2 <- "data-raw/rooftop"
@@ -58,11 +58,9 @@ actual_RV_gen <- actual_RV_gen |>
 
 actual_RV_gen <- actual_RV_gen |>
   dplyr::filter(REGIONID %in% c("QLD1", "NSW1", "VIC1", "TAS1", "SA1"))
-actual_RV_gen <- actual_RV_gen |>
-  dplyr::mutate(TIME = hms(TIME))
 
-actual_RV_gen |> write.csv("data-raw/actual_RV_gen.csv")
-actual_demand_june |> write.csv("data-raw/actual_demand_june.csv")
+actual_RV_gen <- actual_RV_gen |>
+  dplyr::mutate(TIME = lubridate::hms(TIME))
 
 usethis::use_data(actual_RV_gen, overwrite = TRUE)
 usethis::use_data(actual_demand_june, overwrite = TRUE)
