@@ -1,5 +1,7 @@
 ## code to prepare `actual demand` and `estimate rooftop generation` dataset goes here
 
+library(lubridate)
+
 folder_path <- "data-raw/Public_Actual_Demand_2024_June"
 file_list_1 <- list.files(path = folder_path, full.names = TRUE)
 
@@ -26,7 +28,7 @@ actual_demand_june <- actual_demand_june |>
   )
 
 actual_demand_june <- actual_demand_june |>
-  dplyr::mutate(TIME = lubridate::hms(TIME))
+  dplyr::mutate(TIME = hms(TIME))
 
 # Step 2: List all the CSV files in the folder
 folder_path_2 <- "data-raw/rooftop"
@@ -57,7 +59,7 @@ actual_RV_gen <- actual_RV_gen |>
 actual_RV_gen <- actual_RV_gen |>
   dplyr::filter(REGIONID %in% c("QLD1", "NSW1", "VIC1", "TAS1", "SA1"))
 actual_RV_gen <- actual_RV_gen |>
-  dplyr::mutate(TIME = lubridate::hms(TIME))
+  dplyr::mutate(TIME = hms(TIME))
 
 actual_RV_gen |> write.csv("data-raw/actual_RV_gen.csv")
 actual_demand_june |> write.csv("data-raw/actual_demand_june.csv")
