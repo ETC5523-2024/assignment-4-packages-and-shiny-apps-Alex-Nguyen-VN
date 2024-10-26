@@ -32,8 +32,8 @@ This repository contains two key components:
 To install the custom R package directly from GitHub, use:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("ETC5523-2024/assignment-4-packages-and-shiny-apps-Alex-Nguyen-VN")
+# install.packages("remotes")
+remotes::install_github("ETC5523-2024/assignment-4-packages-and-shiny-apps-Alex-Nguyen-VN")
 ```
 
 The link to the app can also be found here:

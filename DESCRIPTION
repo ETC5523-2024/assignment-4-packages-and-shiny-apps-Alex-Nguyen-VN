@@ -6,7 +6,7 @@ Authors@R:
 Description: The package provides a dataset of rooftop solar generation in Australia. The data is collected from the Australian Energy Market Operator (AEMO). The dataset includes the rooftop solar generation data output as well as the total operational demand of the system.
 License: MIT + file LICENSE
 Depends: 
-    R (>= 4.3.3)
+    R (>= 4.3)
 Imports: 
     shiny,
     shinyjs,

@@ -18,8 +18,8 @@ This vignette demonstrates how to install the package, launch the Shiny app, and
 To install this package, use the following command:
 
 ```{r Setup, eval = FALSE}
-# install.packages("devtools")
-devtools::install_github("ETC5523-2024/assignment-4-packages-and-shiny-apps-Alex-Nguyen-VN")
+# install.packages("remotes")
+remotes::install_github("ETC5523-2024/assignment-4-packages-and-shiny-apps-Alex-Nguyen-VN")
 ```
 
 # Launching the Shiny App
