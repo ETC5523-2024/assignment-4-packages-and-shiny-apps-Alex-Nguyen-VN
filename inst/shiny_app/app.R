@@ -1,16 +1,16 @@
 library(shiny)
-library(shinyjs)
+library(shinyjs)        # Load shinyjs for JavaScript capabilities
 library(shinydashboard)
 library(bslib)
 library(dplyr)
 library(ggplot2)
 library(DT)
-library(lubridate)
+library(ausrooftop)
 
 # Define a custom theme
 my_theme <- bs_theme(
   version = 4,
-  bootswatch = "flatly",
+  bootswatch = "darkly",
   primary = "#3498db",
   secondary = "#2ecc71"
 )
@@ -24,8 +24,8 @@ ui <- dashboardPage(
     )
   ),
   dashboardBody(
+    shinyjs::useShinyjs(),  # Initialize shinyjs
     bs_theme_dependencies(my_theme),
-    shinyjs::useShinyjs(),
     tabItems(
       # Dashboard tab content
       tabItem(tabName = "dashboard",
@@ -49,6 +49,26 @@ ui <- dashboardPage(
                 )
               ),
               fluidRow(
+                # Field Description
+                box(
+                  title = "Field Descriptions", width = 6, status = "info", solidHeader = TRUE,
+                  p("REGIONID: Unique identifier for each region."),
+                  p("OPERATIONAL_DEMAND: The actual operational demand recorded in megawatts (MW)."),
+                  p("POWER: The renewable power generation measured in megawatts (MW)."),
+                  p("INTERVAL_DATETIME: Date and time of the data recording interval."),
+                  p("DATE: The date of each recorded interval."),
+                  p("TIME: The time of each recorded interval.")
+                ),
+                # Interpretation Guide
+                box(
+                  title = "How to Interpret the Outputs", width = 6, status = "info", solidHeader = TRUE,
+                  p("The summary boxes display the total and average demand and generation values for the selected region."),
+                  p("The line plot shows the average demand (in red) and average generation (in green) over time."),
+                  p("Dashed vertical lines indicate typical daytime hours (7:00 AM to 6:00 PM), helping to analyze demand and generation patterns."),
+                  p("The data table provides a detailed view of the demand and generation values for each interval, which can be sorted or filtered for further analysis.")
+                )
+              ),
+              fluidRow(
                 # Data Table
                 box(
                   title = "Demand and Generation Data", width = 12, solidHeader = TRUE, status = "primary",
@@ -65,33 +85,28 @@ server <- function(input, output, session) {
 
   # Summary metrics
   output$total_demand <- renderValueBox({
-    # Filter data based on selected region
-    regional_demand <- actual_demand_june |> filter(REGIONID == input$region)
+    regional_demand <- actual_demand_june %>% filter(REGIONID == input$region)
     total_demand <- sum(regional_demand$OPERATIONAL_DEMAND, na.rm = TRUE)
     valueBox(total_demand, "Total Demand (MW)", icon = icon("bolt"), color = "blue")
   })
 
   output$average_demand <- renderValueBox({
-    # Filter data based on selected region
-    regional_demand <- actual_demand_june |> filter(REGIONID == input$region)
+    regional_demand <- actual_demand_june %>% filter(REGIONID == input$region)
     avg_demand <- mean(regional_demand$OPERATIONAL_DEMAND, na.rm = TRUE)
     valueBox(round(avg_demand, 2), "Average Demand (MW)", icon = icon("tachometer-alt"), color = "green")
   })
 
   output$total_gen <- renderValueBox({
-    # Filter data based on selected region
-    regional_gen <- actual_RV_gen |> filter(REGIONID == input$region)
+    regional_gen <- actual_RV_gen %>% filter(REGIONID == input$region)
     total_gen <- sum(regional_gen$POWER, na.rm = TRUE)
     valueBox(total_gen, "Total Generation (MW)", icon = icon("sun"), color = "yellow")
   })
 
   output$average_gen <- renderValueBox({
-    # Filter data based on selected region
-    regional_gen <- actual_RV_gen |> filter(REGIONID == input$region)
+    regional_gen <- actual_RV_gen %>% filter(REGIONID == input$region)
     avg_gen <- mean(regional_gen$POWER, na.rm = TRUE)
     valueBox(round(avg_gen, 2), "Average Generation (MW)", icon = icon("chart-line"), color = "purple")
   })
-
 
   # Plot based on region selection
   output$plot <- renderPlot({
@@ -114,8 +129,8 @@ server <- function(input, output, session) {
       geom_line(color = "#2ecc71") +  # Power generation line
       scale_x_time(labels = scales::time_format("%H:%M"), breaks = scales::breaks_width("8 hours")) +
       geom_line(data = data_3, aes(x = TIME, y = mean_demand), color = "#e74c3c") +  # Demand line
-      geom_vline(xintercept = as.numeric(lubridate::hms("07:00:00")), linetype = "dashed", color = "#ecf0f1") +
-      geom_vline(xintercept = as.numeric(lubridate::hms("18:00:00")), linetype = "dashed", color = "#ecf0f1") +
+      geom_vline(xintercept = as.numeric(lubridate::hms("07:00:00")), linetype = "dashed", color = "black", linewidth = 1) +
+      geom_vline(xintercept = as.numeric(lubridate::hms("18:00:00")), linetype = "dashed", color = "black", linewidth = 1) +
       labs(title = paste("Mean Power Generation and Demand for", input$region),
            x = "Time of Day",
            y = "Power (MW)")
