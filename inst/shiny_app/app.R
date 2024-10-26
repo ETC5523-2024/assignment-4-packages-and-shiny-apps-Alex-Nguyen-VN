@@ -1,14 +1,17 @@
 library(shiny)
+library(shinyjs)  # Load shinyjs for JavaScript capabilities
 library(dplyr)
 library(ggplot2)
 library(ausrooftop)
 
 ui <- fluidPage(
+  shinyjs::useShinyjs(),  # Initialize shinyjs
   titlePanel("Explore My Dataset"),
   sidebarLayout(
     sidebarPanel(
-      # Add selectors/input fields here, e.g., a dropdown
-      selectInput("region", "Select Region:", choices = unique(actual_demand_june$REGIONID))
+      # Add selectors/input fields here
+      selectInput("region", "Select Region:", choices = unique(actual_demand_june$REGIONID)),
+      actionButton("lucky_button", "I'm Feeling Lucky")
     ),
     mainPanel(
       plotOutput("plot")
@@ -44,6 +47,12 @@ server <- function(input, output) {
            x = "Time of Day",
            y = "Power (MW)")
     })
+  # Observe the "I'm Feeling Lucky" button click
+  observeEvent(input$lucky_button, {
+    # Trigger JavaScript to open a new window with the Rickroll video
+    shinyjs::runjs('window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");')
+  })
 }
+
 
 shinyApp(ui = ui, server = server)
