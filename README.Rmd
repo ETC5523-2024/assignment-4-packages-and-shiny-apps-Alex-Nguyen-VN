@@ -16,24 +16,30 @@ knitr::opts_chunk$set(
 # ausrooftop
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
 # Assignment 4: R Packages and Shiny Apps
 
 **Assignment 4** for ETC5523 focuses on the development of an R package and a Shiny application. This repository contains the source code, documentation, and examples for both.
-## Project Overview
-This repository contains two key components:
-1. **R Package**: A custom R package designed for the assigment 4 of the unit 5523 - Communication with Data. 
-This package helps the public have a closer look to the Australia Electricity Market by providing matching between
-the total operational demand of the network with the expected generation output of the solar rooftop generator. 
 
-2. **Shiny App**: An interactive Shiny app built to analyze the dataset. This app allows users see the relationship between the total operational demand of the network and the expected generation output of the solar rooftop generator.
+## Project Overview
+
+This repository contains two key components:
+
+1.  **R Package**: This is a custom R package designed for assignment 4 of unit 5523, Communication with Data. This package helps the public examine the Australian electricity Market more closely by matching the network's total operational demandwith the expected generation output of the solar rooftop generator.
+
+2.  **Shiny App**: An interactive Shiny app built to analyse the dataset. This app allows users to see the relationship between the total operational demand of the network and the expected generation output of the solar rooftop generator.
 
 ## Installation
 
 To install the custom R package directly from GitHub, use:
 
-```r
+``` r
 # install.packages("devtools")
 devtools::install_github("Alex-Nguyen-VN/assignment-4-packages-and-shiny-apps-Alex-Nguyen-VN")
 ```
+
+The link to the app can also be found here:
+
+<https://etc5523-2024.github.io/assignment-4-packages-and-shiny-apps-Alex-Nguyen-VN/>

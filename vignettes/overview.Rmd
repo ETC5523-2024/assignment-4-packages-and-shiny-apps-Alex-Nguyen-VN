@@ -2,25 +2,10 @@
 title: "Using the Renewable Generation Dashboard"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{overview}
+  %\VignetteIndexEntry{Using the Renewable Generation Dashboard}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
-  markdown: 
-    wrap: sentence
 ---
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  eval = FALSE,
-)
-```
-
-```{r setup}
-library(ausrooftop)
-```
 
 # Overview
 
@@ -32,7 +17,7 @@ This vignette demonstrates how to install the package, launch the Shiny app, and
 
 To install this package, use the following command:
 
-```{r}
+```{r Setup, eval = FALSE}
 # install.packages("devtools")
 devtools::install_github("Alex-Nguyen-VN/assignment-4-packages-and-shiny-apps-Alex-Nguyen-VN")
 ```
@@ -41,7 +26,7 @@ devtools::install_github("Alex-Nguyen-VN/assignment-4-packages-and-shiny-apps-Al
 
 To launch the Shiny app, simply call the `launch_shiny_app()` function:
 
-```{r}
+```{r, eval = FALSE}
 launch_shiny_app()
 ```
 
