@@ -40,7 +40,7 @@ ui <- dashboardPage(
                 # Filter options and plot
                 box(
                   title = "Filters", width = 4, solidHeader = TRUE, status = "primary",
-                  selectInput("region", "Select Region:", choices = unique(actual_demand_june$REGIONID)),
+                  selectInput("region", "Select Region:", choices = unique(actual_demand_june$REGIONID), selected = "NSW1"),
                   actionButton("lucky_button", "I'm Feeling Lucky")
                 ),
                 box(
