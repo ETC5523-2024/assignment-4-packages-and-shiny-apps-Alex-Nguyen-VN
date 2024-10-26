@@ -9,6 +9,7 @@ Depends:
     R (>= 4.3.3)
 Imports: 
     shiny,
+    shinyjs,
     shinydashboard,
     bslib,
     dplyr,

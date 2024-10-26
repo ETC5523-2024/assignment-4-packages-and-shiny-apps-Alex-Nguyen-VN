@@ -1,4 +1,5 @@
 library(shiny)
+library(shinyjs)
 library(shinydashboard)
 library(bslib)
 library(dplyr)
@@ -24,6 +25,7 @@ ui <- dashboardPage(
   ),
   dashboardBody(
     bs_theme_dependencies(my_theme),
+    shinyjs::useShinyjs(),
     tabItems(
       # Dashboard tab content
       tabItem(tabName = "dashboard",
