@@ -1,27 +1,98 @@
 library(shiny)
-library(shinyjs)  # Load shinyjs for JavaScript capabilities
+library(shinydashboard)
+library(bslib)
 library(dplyr)
 library(ggplot2)
+library(DT)
 library(ausrooftop)
 
-ui <- fluidPage(
-  shinyjs::useShinyjs(),  # Initialize shinyjs
-  titlePanel("Explore My Dataset"),
-  sidebarLayout(
-    sidebarPanel(
-      # Add selectors/input fields here
-      selectInput("region", "Select Region:", choices = unique(actual_demand_june$REGIONID)),
-      actionButton("lucky_button", "I'm Feeling Lucky")
-    ),
-    mainPanel(
-      plotOutput("plot")
+# Define a custom theme
+my_theme <- bs_theme(
+  version = 4,
+  bootswatch = "darkly",
+  primary = "#3498db",
+  secondary = "#2ecc71"
+)
+
+# Define the UI
+ui <- dashboardPage(
+  dashboardHeader(title = "Renewable Generation Dashboard"),
+  dashboardSidebar(
+    sidebarMenu(
+      menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard"))
+    )
+  ),
+  dashboardBody(
+    bs_theme_dependencies(my_theme),
+    tabItems(
+      # Dashboard tab content
+      tabItem(tabName = "dashboard",
+              fluidRow(
+                # Summary Boxes
+                valueBoxOutput("total_demand", width = 3),
+                valueBoxOutput("average_demand", width = 3),
+                valueBoxOutput("total_gen", width = 3),
+                valueBoxOutput("average_gen", width = 3)
+              ),
+              fluidRow(
+                # Filter options and plot
+                box(
+                  title = "Filters", width = 4, solidHeader = TRUE, status = "primary",
+                  selectInput("region", "Select Region:", choices = unique(actual_demand_june$REGIONID)),
+                  actionButton("lucky_button", "I'm Feeling Lucky")
+                ),
+                box(
+                  title = "Mean Power Generation and Demand Over Time", width = 8, solidHeader = TRUE, status = "primary",
+                  plotOutput("plot")
+                )
+              ),
+              fluidRow(
+                # Data Table
+                box(
+                  title = "Demand and Generation Data", width = 12, solidHeader = TRUE, status = "primary",
+                  dataTableOutput("data_table")
+                )
+              )
+      )
     )
   )
 )
 
-server <- function(input, output) {
+# Define server logic
+server <- function(input, output, session) {
+
+  # Summary metrics
+  output$total_demand <- renderValueBox({
+    # Filter data based on selected region
+    regional_demand <- actual_demand_june %>% filter(REGIONID == input$region)
+    total_demand <- sum(regional_demand$OPERATIONAL_DEMAND, na.rm = TRUE)
+    valueBox(total_demand, "Total Demand (MW)", icon = icon("bolt"), color = "blue")
+  })
+
+  output$average_demand <- renderValueBox({
+    # Filter data based on selected region
+    regional_demand <- actual_demand_june %>% filter(REGIONID == input$region)
+    avg_demand <- mean(regional_demand$OPERATIONAL_DEMAND, na.rm = TRUE)
+    valueBox(round(avg_demand, 2), "Average Demand (MW)", icon = icon("tachometer-alt"), color = "green")
+  })
+
+  output$total_gen <- renderValueBox({
+    # Filter data based on selected region
+    regional_gen <- actual_RV_gen %>% filter(REGIONID == input$region)
+    total_gen <- sum(regional_gen$POWER, na.rm = TRUE)
+    valueBox(total_gen, "Total Generation (MW)", icon = icon("sun"), color = "yellow")
+  })
+
+  output$average_gen <- renderValueBox({
+    # Filter data based on selected region
+    regional_gen <- actual_RV_gen %>% filter(REGIONID == input$region)
+    avg_gen <- mean(regional_gen$POWER, na.rm = TRUE)
+    valueBox(round(avg_gen, 2), "Average Generation (MW)", icon = icon("chart-line"), color = "purple")
+  })
+
+
+  # Plot based on region selection
   output$plot <- renderPlot({
-    # Generate a plot based on user input
     data_1 <- subset(actual_demand_june, REGIONID == input$region)
     data_2 <- subset(actual_RV_gen, REGIONID == input$region)
     data_3 <- data_1 |>
@@ -38,21 +109,27 @@ server <- function(input, output) {
       )
     data_4 |>
       ggplot(aes(x = TIME, y = mean_gen)) +
-      geom_line() +
+      geom_line(color = "#2ecc71") +  # Power generation line
       scale_x_time(labels = scales::time_format("%H:%M"), breaks = scales::breaks_width("8 hours")) +
-      geom_line(data = data_3, aes(x = TIME, y = mean_demand), color = "red") +
-      geom_vline(xintercept = as.numeric(hms("07:00:00")), linetype = "dashed") +
-      geom_vline(xintercept = as.numeric(hms("18:00:00")), linetype = "dashed") +
+      geom_line(data = data_3, aes(x = TIME, y = mean_demand), color = "#e74c3c") +  # Demand line
+      geom_vline(xintercept = as.numeric(hms("07:00:00")), linetype = "dashed", color = "#ecf0f1") +
+      geom_vline(xintercept = as.numeric(hms("18:00:00")), linetype = "dashed", color = "#ecf0f1") +
       labs(title = paste("Mean Power Generation and Demand for", input$region),
            x = "Time of Day",
            y = "Power (MW)")
-    })
-  # Observe the "I'm Feeling Lucky" button click
+  })
+
+  # Data Table for demand and generation
+  output$data_table <- renderDataTable({
+    merged_data <- merge(actual_demand_june, actual_RV_gen, by = c("REGIONID", "INTERVAL_DATETIME", "DATE", "TIME"), all = TRUE)
+    datatable(merged_data)
+  })
+
+  # "I'm Feeling Lucky" button functionality
   observeEvent(input$lucky_button, {
-    # Trigger JavaScript to open a new window with the Rickroll video
     shinyjs::runjs('window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");')
   })
 }
 
-
+# Run the app
 shinyApp(ui = ui, server = server)
