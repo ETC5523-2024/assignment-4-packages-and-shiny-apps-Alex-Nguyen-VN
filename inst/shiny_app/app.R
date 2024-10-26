@@ -6,6 +6,7 @@ library(dplyr)
 library(ggplot2)
 library(DT)
 library(ausrooftop)
+library(lubridate)
 
 # Define a custom theme
 my_theme <- bs_theme(
