@@ -1,2 +1,8 @@
 ^ausrooftop\.Rproj$
 ^\.Rproj\.user$
+^LICENSE\.md$
+^data-raw$
+^README\.Rmd$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
