@@ -1,12 +1,20 @@
 Package: ausrooftop
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Australian Rooftop Solar Generation Data
+Version: 0.0.0.1
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Thanh Cuong", "Nguyen", , "tngu0478@student.monash.edu", role = c("aut", "cre"))
+Description: The package provides a dataset of rooftop solar generation in Australia. The data is collected from the Australian Energy Market Operator (AEMO). The dataset includes the rooftop solar generation data output as well as the total operational demand of the system.
+License: MIT + file LICENSE
+Depends: 
+    R (>= 2.10)
+Imports: 
+    shiny,
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat
+VignetteBuilder: knitr
 Encoding: UTF-8
+LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
