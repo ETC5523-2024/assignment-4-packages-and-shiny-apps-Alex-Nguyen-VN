@@ -9,9 +9,7 @@ vignette: >
 
 # Overview
 
-The **Renewable Generation Dashboard** package provides a Shiny app to explore renewable energy generation and operational demand data across various regions in Australia.
-The dashboard allows users to interactively view total and average demand and generation values, visualize generation and demand trends, and filter data by region.
-This vignette demonstrates how to install the package, launch the Shiny app, and utilize its features for analysis.
+The **Renewable Generation Dashboard** package provides a Shiny app to explore renewable energy generation and operational demand data across various regions in Australia. The dashboard allows users to interactively view total and average demand and generation values, visualize generation and demand trends, and filter data by region. This vignette demonstrates how to install the package, launch the Shiny app, and utilize its features for analysis.
 
 # Installation
 
@@ -35,31 +33,21 @@ This will open the Shiny app in your default browser, providing an interactive d
 
 # Using the Dashboard
 
-The dashboard consists of several components, including summary boxes, filter options, plots, and data tables.
-Here's a brief overview of each component:
+The dashboard consists of several components, including summary boxes, filter options, plots, and data tables. Here's a brief overview of each component:
 
-1.  Region Selector On the left side of the dashboard, there is a dropdown selector labelled "Select Region." This dropdown allows users to filter data by region, displaying metrics and visualizations specific to the selected region.
-    Available regions include (e.g., NSW1, QLD1, etc.).
+1.  Region Selector On the left side of the dashboard, there is a dropdown selector labelled "Select Region." This dropdown allows users to filter data by region, displaying metrics and visualizations specific to the selected region. Available regions include (e.g., NSW1, QLD1, etc.).
 
 2.  Summary Boxes At the top of the dashboard, four summary boxes display key metrics for the selected region:
 
-3.  Total Demand: Shows the total operational demand (in MW) for the selected region.
-    Average Demand: Shows the average operational demand (in MW) for the selected region.
-    Total Generation: Shows the total renewable power generation (in MW) for the selected region.
-    Average Generation: Shows the average renewable power generation (in MW) for the selected region.
-    These values update automatically based on the selected region.
+3.  Total Demand: Shows the total operational demand (in MW) for the selected region. Average Demand: Shows the average operational demand (in MW) for the selected region. Total Generation: Shows the total renewable power generation (in MW) for the selected region. Average Generation: Shows the average renewable power generation (in MW) for the selected region. These values update automatically based on the selected region.
 
-4.  Trend Visualization The main panel of the dashboard features a line plot comparing Mean Power Generation and Mean Operational Demand across different times of the day for the selected region.
-    Key aspects of the plot include:
+4.  Trend Visualization The main panel of the dashboard features a line plot comparing Mean Power Generation and Mean Operational Demand across different times of the day for the selected region. Key aspects of the plot include:
 
-5.  Green Line: Represents the mean power generation in MW over time.
-    Red Line: Represents the mean operational demand in MW over time.
-    Dashed Vertical Lines: Show standard daytime start (7:00 AM) and end (6:00 PM) hours, aiding users in analysing demand patterns.
+5.  Green Line: Represents the mean power generation in MW over time. Red Line: Represents the mean operational demand in MW over time. Dashed Vertical Lines: Show standard daytime start (7:00 AM) and end (6:00 PM) hours, aiding users in analysing demand patterns.
 
-    4.  Data Table At the bottom of the dashboard, a table displays detailed records of both operational demand and power generation for each time interval in the selected region. Users can sort and search through the data table to examine specific records.
+6.  Data Table At the bottom of the dashboard, a table displays detailed records of both operational demand and power generation for each time interval in the selected region. Users can sort and search through the data table to examine specific records.
 
-6.  "I'm Feeling Lucky" Button An "I'm Feeling Lucky" button is available in the sidebar.
-    When clicked, it opens a surprise link in a new browser tab for an entertaining Easter egg.
+7.  "I'm Feeling Lucky" Button An "I'm Feeling Lucky" button is available in the sidebar. When clicked, it opens a surprise link in a new browser tab for an entertaining Easter egg.
 
 # Code overview
 
