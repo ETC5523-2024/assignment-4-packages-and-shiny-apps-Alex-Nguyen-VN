@@ -112,8 +112,8 @@ server <- function(input, output, session) {
       geom_line(color = "#2ecc71") +  # Power generation line
       scale_x_time(labels = scales::time_format("%H:%M"), breaks = scales::breaks_width("8 hours")) +
       geom_line(data = data_3, aes(x = TIME, y = mean_demand), color = "#e74c3c") +  # Demand line
-      geom_vline(xintercept = as.numeric(hms("07:00:00")), linetype = "dashed", color = "#ecf0f1") +
-      geom_vline(xintercept = as.numeric(hms("18:00:00")), linetype = "dashed", color = "#ecf0f1") +
+      geom_vline(xintercept = as.numeric(lubridate::hms("07:00:00")), linetype = "dashed", color = "#ecf0f1") +
+      geom_vline(xintercept = as.numeric(lubridate::hms("18:00:00")), linetype = "dashed", color = "#ecf0f1") +
       labs(title = paste("Mean Power Generation and Demand for", input$region),
            x = "Time of Day",
            y = "Power (MW)")
